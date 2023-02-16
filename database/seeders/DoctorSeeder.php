@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User_ap;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Models\Users;
+
 
 class DoctorSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DoctorSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 99; $i++) {
-            Users::create([
+            User_ap::create([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
