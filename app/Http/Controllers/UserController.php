@@ -25,8 +25,14 @@ class UserController extends Controller
    }
 
    public function showCorrectHomepage(){
+   if ( auth()->check()){
+    return view('profile');
+   }else{
     return view('welcome');
    }
+    
+   }
+
    public function login(Request $request){
     $incomingFields = $request->validate([
         'user_email'=>'required',
@@ -35,11 +41,16 @@ class UserController extends Controller
 
     if(auth()->attempt(['email'=> $incomingFields['user_email'], 'password'=>$incomingFields['user_password']])){
         $request->session()->regenerate();
-        return redirect('/user_profile')->with('success','you have sucessfully loged in');
+        return view('profile')->with('success','you have sucessfully loged in');
     }else{
         return redirect('/')->with('success','login failed, no such user in the database');
     }
 
+   }
+
+   public function logout(){
+     auth()->logout();
+     return redirect('/')->with('success','you have sucessfully loged out ');
    }
 
 

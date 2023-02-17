@@ -1,38 +1,4 @@
  <x-layout>
- <!DOCTYPE html>
-<html>
-<head>
-	<title>Doctor Appointment Website</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-</head>
-<body>
-
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container">
-		<a class="navbar-brand" href="#">Doctor Appointment Website</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="#">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">About</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Contact</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</nav>
-{{-- body begains --}}
  <!-- Jumbotron -->
 <div class="jumbotron jumbotron-fluid">
 	<div class="container">
@@ -43,26 +9,6 @@
 
 <!-- Login and Signup Forms -->
 <div class="container">
-	<div class="row">
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Login</h5>
-					<form action="/login" method="POST">
-					@csrf
-						<div class="form-group">
-							<label for="loginEmail">Email address</label>
-							<input name="user_email" type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="loginPassword">Password</label>
-							<input name="user_password" type="password" class="form-control" id="loginPassword" placeholder="Password">
-						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</form>
-				</div>
-			</div>
-		</div>
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-body">

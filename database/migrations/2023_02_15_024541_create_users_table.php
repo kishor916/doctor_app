@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
-            $table->string('status')->default('active')->comment('active,inactive,deleted');
+            $table->string('status')->default('active')->comment('Active,Inactive,deleted');
             $table->string('address');
             $table->string('type')->default('user')->commnet('user,doctor,admin');
             $table->timestamps();
