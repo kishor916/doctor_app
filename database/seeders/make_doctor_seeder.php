@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User_ap;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User_ap;
+
 use Faker\Factory as Faker;
 
 
-class DoctorSeeder extends Seeder
+class make_doctor_seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,13 +27,12 @@ class DoctorSeeder extends Seeder
                 'password' => bcrypt($faker->password),
                 'gender' => $faker->randomElement(['Male', 'Female']),
                 'phone' => $faker->phoneNumber,
-                'status' => $faker->randomElement(['Active', 'Inactive']),
+                'status' => $faker->randomElement(['Active']),
                 'address' => $faker->address,
-                'type' => $faker->randomElement(['doctor', 'user']),
+                'type' => $faker->randomElement(['doctor']),
                 'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
                 'updated_at' => $faker->dateTimeBetween('-1 year', 'now'),
             ]);
         }
-        
     }
 }

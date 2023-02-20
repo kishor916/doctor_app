@@ -20,15 +20,17 @@
         <ul class="navbar-nav">
         
           <li class="nav-item">
-            <form class="form-inline" action="#" method="GET">
+            <form class="form-inline" action="/search" method="GET">
 				@csrf
-              <select class="form-control mr-sm-2" name="category">
+              <select class="form-control mr-sm-2" name="specialist">
                 <option value="">All Categories</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-                <option value="category3">Category 3</option>
+
+				@foreach ($specialists as $specialist)
+				<option value="{{$specialist['id']}}">{{$specialist['name']}}</option>
+				@endforeach
+
               </select>
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
           </li>
@@ -36,7 +38,9 @@
       </div>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Your Profile</a>
+			<a class="nav-link" href="#">
+				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU" alt="Your Profile" class="rounded-circle" style="width: 30px; height: 30px;">
+			  </a>
         </li>
         <form action="/logout" method="POST" class="d-inline">
 			@csrf
@@ -80,7 +84,8 @@
 </div>
 @endif
 
-	{{ $slot }}
+	@yield('content')
+	
 
 
 <!-- Footer -->

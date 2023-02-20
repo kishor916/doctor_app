@@ -1,5 +1,6 @@
-<x-layout>
-
+@extends('components.layout')
+@section('content')
+    
 
   {{-- doctors profile starts here --}}
   
@@ -47,6 +48,5 @@
   </div>
   
    
-
+  @endsection
   
-</x-layout>
