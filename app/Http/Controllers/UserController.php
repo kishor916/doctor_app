@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Specialization;
 use App\Models\User_ap;
 use Illuminate\Http\Request;
 use Illuminate\validation\Rule;
+
 
 class UserController extends Controller
 {
@@ -40,7 +42,8 @@ class UserController extends Controller
     }
 
     public function login(Request $request)
-    {
+    {   
+        
         $incomingFields = $request->validate([
             'user_email' => 'required',
             'user_password' => 'required',
@@ -87,22 +90,72 @@ class UserController extends Controller
     // }
 
     private function searchDoctor($specialistId, $name)
-{
-    $doctors = User_ap::select('users.*')
-        ->join('link_doctors_specialization', 'users.id', '=', 'link_doctors_specialization.doctor_id')
+    {
+        $doctors = User_ap::select('users.*')
+            ->join('link_doctors_specialization', 'users.id', '=', 'link_doctors_specialization.doctor_id')
 
-        ->where('link_doctors_specialization.specialization_id', $specialistId)
-        ->where('status', 'Active')
-        ->where('type', 'doctor')
-        ->where(function ($q) use ($name) {
-            $q->where('first_name', 'like', '%' . $name . '%')
-              ->orWhere('last_name', 'like', '%' . $name . '%');
-        })
-        ->get();
+            ->where('link_doctors_specialization.specialization_id', $specialistId)
+            ->where('status', 'Active')
+            ->where('type', 'doctor')
+            ->where(function ($q) use ($name) {
+                $q->where('first_name', 'like', '%' . $name . '%')
+                    ->orWhere('last_name', 'like', '%' . $name . '%');
+            })
+            ->get();
 
-    dd($doctors);
-    exit;
-}
+        dd($doctors);
+        exit;
+    }
 
+    public function appointment(Request $request)
+    {
+        // $incomingFields = $request->validate([
+        //     'from' => 'required|date_format:Y-m-d H:i:s',
+        //     'to' => 'required|date_format:Y-m-d H:i:s',
+        //     'doctor_id' => 'required|integer|gt:0',
+        // ]);
+    
+        // if ($this->$incomingFields->fails()) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => $this->$incomingFields->errors(),
+        //     ], 422);
+        // }
+        
+        $from = $request->input('from');
+        $to = $request->input('to');
+        $doctor_id = $request->input('doctor_id');
+
+        $appointments = Appointment::where('doctor_id', $doctor_id)
+            ->where(function ($query) use ($from, $to) {
+                $query->whereBetween('from', [$from, $to])
+                    ->orWhereBetween('to', [$from, $to])
+                    ->orWhere(function ($query) use ($from, $to) {
+                        $query->where('from', '<', $from)
+                            ->where('to', '>', $to);
+                    });
+            })
+            ->get();
+
+        if (count($appointments) > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'This time slot is already booked for this doctor. Please choose another time.',
+            ], 422);
+        } else {
+            $appointment = new Appointment();
+            $appointment->from = $from;
+            $appointment->to = $to;
+            $appointment->user_id = $request->input('user_id');
+            $appointment->doctor_id = $doctor_id;
+            $appointment->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Appointment created successfully',
+                'data' => $appointment,
+            ], 200);
+        }
+    }
 
 }

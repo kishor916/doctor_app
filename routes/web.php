@@ -20,3 +20,4 @@ Route::post('/login',[UserController::class, "login"]);
 Route::post('/logout',[UserController::class, "logout"]);
 
 Route::get('/search',[UserController::class, "search"]);
+Route::post('/appointment',[UserController::class, "appointment"]);
